@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './index.css';
+
+import App from './App';
+import { DataReaderService } from './services/DataReaderService';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+export interface AppServicesCtx {
+    dataReaderService: DataReaderService
+}
+
+export const ServicesContext = createContext({} as AppServicesCtx);
+const dataReaderService = new DataReaderService();
+
+const ctx: AppServicesCtx = {
+    dataReaderService
+}
+
 root.render(
-  <React.StrictMode>
+  <ServicesContext.Provider value={ctx}>
     <App />
-  </React.StrictMode>
+  </ServicesContext.Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
